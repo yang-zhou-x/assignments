@@ -8,4 +8,4 @@
 
 每人随机抽取2张照片作为测试集，预测准确率为82.28%。
   
-本文的难点在于预测时人像角度的不确定性，如根据正面照来识别侧面照，或是根据侧面照来识别正面照。因此，需要在识别时满足不变性（invariance），包括位置不变性（translation invariance）、选择不变性（rotation invariance）、视角不变性（viewpoint invariance）和大小不变性（size invariance）等。本文使用ResNet34中所包含的大量卷积层（convolution layer）来满足不变性的要求。
+本文的难点在于预测时人像角度的不确定性，如根据正面照来识别侧面照，或是根据侧面照来识别正面照。
