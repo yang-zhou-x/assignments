@@ -1,4 +1,4 @@
-# assignments
+# assignments or projects
 
 *1.基于PySpark的中文情感分析*
 
