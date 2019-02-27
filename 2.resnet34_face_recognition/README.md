@@ -12,6 +12,8 @@
 CVL Face Database by Peter Peer, University of Ljubljana
 
 ## 环境配置
-CUDA9.2  cuDNN7.3.1
+CUDA9.2
+
+cuDNN7.3.1
 
 PyTorch0.4.1
