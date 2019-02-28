@@ -10,8 +10,8 @@
 情感分析的应用非常广泛，比较知名的有依靠社交网站Twitter的上公开信息进行情感分析以预测股市的走势，准确率可以达到87.6%，原文地址：https://arxiv.org/pdf/1010.3003.pdf *Twitter mood predicts the stock market.*
 
 ## 数据来源
-商品评论数据集 https://github.com/SophonPlus/ChineseNlpCorpus/blob/master/datasets/online_shopping_10_cats/intro.ipynb
-包含衣物、计算机、书籍、平板、水果等10个类别的6万余条评论数据，并且已标记好正向或负向。其中正向评论31728条，负向评论31046条，比例接近1:1，较为均衡。
+商品评论数据集来自于 https://github.com/SophonPlus/ChineseNlpCorpus/blob/master/datasets/online_shopping_10_cats/intro.ipynb
+。包含衣物、计算机、书籍、平板、水果等10个类别的6万余条评论数据，并且已标记好正向或负向。其中正向评论31728条，负向评论31046条，比例接近1:1，较为均衡。
 
 中文停用词、标点符号数据集由作者本人收集整理制作，共1659个，已上传至本页面。
 
