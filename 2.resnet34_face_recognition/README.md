@@ -8,8 +8,12 @@
   
 本文的难点在于预测时人像角度的不确定性，如根据正面照来识别侧面照，或是根据侧面照来识别正面照。
 
+代码兼容CPU和GPU。更详细的内容在代码注释中。
+
 ## 数据来源
 CVL Face Database by Peter Peer, University of Ljubljana
+
+pdf文件中有详细介绍。
 
 ## 环境配置
 CUDA9.2
