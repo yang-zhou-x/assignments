@@ -19,7 +19,7 @@ from sklearn.metrics import mean_squared_error
 t0 = time.time()
 train_set = pd.read_csv(filepath_or_buffer='~/Downloads/train_V2.csv')
 t = round(time.time() - t0, 2)
-print(f'读取数据用时：{t}s')
+print(f'读取数据用时：{t}s')  # 18.62秒
 
 # 查看数据集信息：
 train_set.info(verbose=False)  # 数据集共有4,446,966行、29列，占用内存大小为984MB左右。
@@ -86,7 +86,7 @@ def team_rank(data):
 t0 = time.time()
 train_set = team_rank(data=train_set)
 t = round(time.time() - t0, 2)
-print(f'特征转换用时：{t}s')
+print(f'特征转换用时：{t}s')  # 58.83秒
 
 # 查看新数据集的信息：
 print(train_set.info(verbose=False))  # 数据集行数、列数不变，此时内存占用为1018M左右
@@ -123,17 +123,17 @@ reg_lgb = lgb.LGBMRegressor(max_depth=50,
 t0 = time.time()
 reg_lgb.fit(X=x_train, y=y_train, categorical_feature=['matchType_int'])
 t = round(time.time() - t0, 2)
-print(f'拟合模型用时：{t}s')
+print(f'拟合模型用时：{t}s')  # 58.8秒
 
 # 进行模型预测：
 t0 = time.time()
 y_pred = reg_lgb.predict(X=x_test)
 t = round(time.time() - t0, 2)
-print(f'模型预测用时：{t}s')
+print(f'模型预测用时：{t}s')  # 9.13秒
 
 # 计算均方误差
 mse = round(mean_squared_error(y_true=y_test, y_pred=y_pred), 4)
-print(f'测试集上的均方误差为{mse}')
+print(f'测试集上的均方误差为{mse}')  # 0.02
 
 # 将特征重要性可视化：
 lgb.plot_importance(booster=reg_lgb, ylabel='', title='LightGBM Regression FI')
