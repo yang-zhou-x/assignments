@@ -11,16 +11,15 @@
 代码兼容CPU和GPU。更详细的内容在代码注释中。
 
 ## 数据来源
-CVL Face Database by Peter Peer, University of Ljubljana
-
-pdf文件中有详细介绍。
+CVL Face Database by Peter Peer, University of Ljubljana  
+  
+详细信息：
+![IMG_0847.JPG](https://i.loli.net/2019/03/02/5c7a78af9590e.jpg)
 
 ## 环境配置
-CUDA9.2
-
-cuDNN7.3.1
-
-PyTorch0.4.1
+CUDA 9.2  
+cuDNN 7.3.1  
+PyTorch 0.4.1
 
 ## 作者
 周扬，中国人民大学
