@@ -21,9 +21,10 @@
 
 ## 数据来源
 约445万条记录，包含近30个特征。  
-来自于PUBG的官方公开数据集。
+来自于PUBG的官方公开数据 https://www.kaggle.com/c/pubg-finish-placement-prediction
 
 ## 环境配置
+macOS 10.13.6  
 gcc 8.2.0  
 cmake 3.13.4  
 libomp 7.0.0  
