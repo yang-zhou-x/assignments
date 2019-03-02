@@ -10,6 +10,15 @@
 (4)分布式支持，可以快速处理海量数据  
 与基于预排序（pre-sorted）决策树算法的GBDT工具相比，LightGBM使用基于直方图（histogram）的算法。在分割增益的复杂度方面，histogram算法只需要计算O(#bins)次, 远少于pre-sorted算法的O(#data)，并且可以通过直方图的相减来进行进一步的加速。
 
+原始特征的相关图：  
+![图片 1.png](https://i.loli.net/2019/03/02/5c7a70b3c429b.png)
+
+不同赛制的玩家数量：  
+![图片 2.png](https://i.loli.net/2019/03/02/5c7a70f3ad01a.png)
+
+特征的重要性排名：  
+![图片 3.png](https://i.loli.net/2019/03/02/5c7a70f3c203d.png)
+
 ## 数据来源
 约445万条记录，包含近30个特征。  
 来自于PUBG的官方公开数据集。
