@@ -109,19 +109,18 @@ print(len(features))  # 16个特征参与建立LightGBM模型
 x_train, x_test, y_train, y_test = train_test_split(train_set[features], train_set['winPlacePerc'],
                                                     test_size=.3, random_state=2018)
 # 建立模型
-reg_lgb = lgb.LGBMRegressor(max_depth=50,
-                            min_data_in_leaf=80,
-                            n_estimators=450,
-                            feature_fraction=0.7,
-                            bagging_fraction=0.5,
-                            num_boost_round=150,
-                            learning_rate=0.005,
-                            num_leaves=80,
-                            n_jobs=-1,  # 4线程并行
-                            metric='mse')  # 参数有点问题
+reg_lgb = lgb.LGBMRegressor(boosting_type='gbdt',
+                            num_leaves=8,  # 基分类器的最大叶节点数量2**3=8
+                            max_depth=4,  # 最大深度4
+                            learning_rate=0.01,
+                            n_estimators=150,  # 基分类器数量150
+                            n_jobs=-1,
+                            importance_type='split')  # 特征在模型中的使用次数作为衡量其重要性的指标
 # 拟合模型
 t0 = time.time()
-reg_lgb.fit(X=x_train, y=y_train, categorical_feature=['matchType_int'])
+reg_lgb.fit(X=x_train,
+            y=y_train,
+            categorical_feature=['matchType_int'])
 t = round(time.time() - t0, 2)
 print(f'拟合模型用时：{t}s')  # 58.8秒
 
