@@ -1,6 +1,6 @@
 # assignments or projects
 
-1.基于PySpark的分布式中文情感分析  
+1.[基于PySpark的分布式中文情感分析](https://github.com/yang-zhou-x/assignments/tree/master/1.sentiment_analysis_cn)  
 *--102 lines(含注释)*
 
 2.基于残差网络ResNet34的多角度人脸识别  
