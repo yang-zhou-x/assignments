@@ -1,6 +1,6 @@
 ## 基于LSTM的中文评论情感分析
-本文使用 **Keras** 框架搭建对于中文商品评论的情感分析模型。训练2个epoch后在测试集上的准确率为90.42%。
-
+本文使用 **Keras** 框架搭建对于中文商品评论的情感分析模型。训练2个epoch后在测试集上的准确率为90.42%。  
+代码在[lstm.py](https://github.com/yang-zhou-x/assignments/blob/master/4.lstm_sentiment_analysis/lstm.py)  
 对于文本的预处理包括标识化处理、移除停用词和标点符号、序列对齐等。
 
 运行过程：
