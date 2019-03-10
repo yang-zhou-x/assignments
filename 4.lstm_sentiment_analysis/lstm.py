@@ -15,8 +15,8 @@ from keras.models import Sequential
 from keras.layers import Dense, Embedding, LSTM
 
 # 设置模型参数
-max_features = 10000
-max_len = 20
+max_features = 10000  # 200000
+max_len = 20  # 80
 batch_size = 32
 optimizer = 'adam'
 epoch = 2
