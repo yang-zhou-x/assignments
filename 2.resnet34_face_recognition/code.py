@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Created on 2018-12-08
-@author: Yang Zhou, zhouyang0995@ruc.edu.cn
+Created on 2018-12
+@author: Yang Zhou
 """
 
 import os
