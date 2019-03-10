@@ -4,7 +4,7 @@
 --102 lines(含注释)。使用了hashing trick和tf-idf，以及Naive Bayes。
 
 [基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/4.lstm_sentiment_analysis)  
---164 lines(含注释)。使用Keras实现，backend为TensorFlow。与前一个PySprak项目使用的数据集相同。
+--164 lines(含注释)。使用Keras实现，backend为TensorFlow。
 
 [基于残差网络ResNet34的多角度人脸识别](https://github.com/yang-zhou-x/assignments/tree/master/2.resnet34_face_recognition)  
 --371 lines(含注释)。使用PyTorch实现，并在GPU上训练。
