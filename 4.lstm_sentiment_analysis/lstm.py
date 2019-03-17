@@ -11,12 +11,12 @@ from sklearn.model_selection import train_test_split
 from jieba import lcut
 
 from keras.preprocessing import sequence, text
-from keras.models import Sequential
-from keras.layers import Dense, Embedding, LSTM
+from keras.models import Sequential, Model
+from keras.layers import Dense, Embedding, LSTM, Flatten, Input
 
 # 设置模型参数
-max_features = 10000  # 20000
-max_len = 20  # 80
+max_features = 10000  # 词汇表的单词总数
+max_len = 30  # 单个序列的长度
 batch_size = 32
 optimizer = 'adam'
 epoch = 2
@@ -28,6 +28,13 @@ print('准备数据...')
 init_path = os.getcwd()
 # 读取商品评论数据
 data = pd.read_csv(filepath_or_buffer=os.path.join(init_path, 'datasets/online_shopping_10_cats.csv'), header=0)
+print(f'原始数据集的形状为: {data.shape}')
+
+# 每个类别的评论长度
+data['review'] = data['review'].astype('str')
+print('计算每个类别评论长度的中位数、平均值、标准差：')
+data['len'] = data['review'].map(lambda x: len(x))
+print(data[['cat', 'len']].groupby(by='cat').agg([np.median, np.mean, np.std]))
 
 
 # 减少数据集的内存占用
@@ -66,13 +73,14 @@ def reduce_memory_usage(df):
             # df[col] = df[col].astype('category')
     end_mem = df.memory_usage().sum() / 1024
     print(f'数据集占用内存大小为： {end_mem} KB.')
-    print(f'减少了{((start_mem - end_mem) / start_mem) * 100}%.')
+    print(f'减少了{round((start_mem - end_mem) / start_mem, 4) * 100}%.')
     return df
 
 
 data = reduce_memory_usage(data)
 
 
+# 获取停用词、标点符号
 def get_stop_words():
     """
     读取停用词表，含标点符号
@@ -80,7 +88,7 @@ def get_stop_words():
     """
 
     def iter_file(path):
-        with open(path) as file:
+        with open(path, encoding='utf-8') as file:
             for line in file:
                 yield line
 
@@ -94,6 +102,7 @@ def get_stop_words():
 stops = get_stop_words()
 
 
+# 分词
 def pre_transform(string, stop_words):
     """
     对一条评论进行分词、去除停用词和标点符号后，以空格分隔重新拼接
@@ -102,7 +111,7 @@ def pre_transform(string, stop_words):
     return ' '.join(x for x in lcut(string) if x not in stop_words)
 
 
-print(f'数据集的形状为: {data.shape}')
+print('进行分词...')
 data.loc[:, 'review'] = data['review'].map(lambda x: pre_transform(x, stops))
 
 # 将文本转化为整数序列
@@ -128,15 +137,17 @@ print(f'x_test shape: {x_test.shape}')
 '''
 print('建立模型...')
 model = Sequential()
-model.add(Embedding(input_dim=max_features, output_dim=128))
-model.add(LSTM(units=128, activation='tanh', dropout=0.2, recurrent_dropout=0.2))
+model.add(Embedding(input_dim=max_features, output_dim=128, input_length=max_len))
+model.add(LSTM(units=64, activation='tanh', return_sequences=True, dropout=0.2, recurrent_dropout=0.2))
+model.add(Flatten())
 model.add(Dense(1, activation='sigmoid'))
+
+print('模型概况：')
+model.summary()
 
 model.compile(optimizer=optimizer,
               loss='binary_crossentropy',
               metrics=['accuracy'])
-print('模型概况：')
-model.summary()
 
 '''
 3.训练模型并评价
@@ -151,6 +162,7 @@ model.fit(x_train, y_train,
 # score, acc = model.evaluate(x_test, y_test, batch_size=batch_size)
 # print(f'测试集误差：{score}')
 # print(f'测试集准确率：{acc}')
+model.predict(x_test[0].reshape(-1, max_len))
 
 '''
 4.模型持久化 model persistence
