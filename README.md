@@ -1,4 +1,4 @@
-# assignments or projects
+# projects
 
 [基于PySpark的分布式中文情感分析](https://github.com/yang-zhou-x/assignments/tree/master/1.sentiment_analysis_cn)  
 --102 lines(含注释)。使用了hashing trick和tf-idf，以及Naive Bayes。
