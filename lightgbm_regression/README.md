@@ -1,7 +1,7 @@
 
 ## 基于梯度提升树(GBDT)的玩家排名预测
 使用LightGBM对《绝地求生：大逃杀》玩家的最终百分比排名进行预测。  
-代码[code.py](https://github.com/yang-zhou-x/assignments/blob/master/3.lightgbm_pubg/code.py)包含两大部分：  
+代码[code.py](https://github.com/yang-zhou-x/assignments/blob/master/lightgbm_regression/code.py)包含两个部分：  
 （1）特征工程；  
 （2）模型。  
 详细内容及说明见代码注释。
