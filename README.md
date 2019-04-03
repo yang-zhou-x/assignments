@@ -1,6 +1,6 @@
 # projects
 
-[基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/4.lstm_sentiment_analysis)  
+[基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/lstm_sentiment_analysis)  
 --164 lines(含注释)。使用Keras实现，backend为TensorFlow。
 
 [基于残差网络ResNet34的多角度人脸识别](https://github.com/yang-zhou-x/assignments/tree/master/2.resnet34_face_recognition)  
