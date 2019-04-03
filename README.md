@@ -3,7 +3,7 @@
 [基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/lstm_sentiment_analysis)  
 (179 sloc) 使用Keras实现，backend为TensorFlow。
 
-[基于残差网络ResNet34的多角度人脸识别](https://github.com/yang-zhou-x/assignments/tree/master/2.resnet34_face_recognition)  
+[基于残差网络ResNet34的多角度人脸识别](https://github.com/yang-zhou-x/assignments/tree/master/resnet34_face_recognition)  
 (322 sloc) 使用PyTorch实现，并在GPU上训练。
 
 [基于PySpark的分布式中文情感分析](https://github.com/yang-zhou-x/assignments/tree/master/naiveBayes_sentiment_analysis)  
