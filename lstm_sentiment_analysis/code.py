@@ -133,7 +133,8 @@ def pre_transform(string, stop_words):
     # return
         str, 分好词的评论
     """
-    return ' '.join(x for x in cut(string) if x not in stop_words)
+    return ' '.join(x for x in cut(string)
+                    if x not in stop_words and not x.encode('utf-8').isalnum())
 
 
 print('进行分词...')
