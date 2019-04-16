@@ -1,7 +1,7 @@
 
 ## 基于ResNet34的多角度人脸识别
 
-本文使用 **Pytorch** 建立 **ResNet34** ，对114人的多角度人像进行分类预测，即输入测试图片后返回人物的对应标签。  
+本文使用 [**Pytorch**](https://pytorch.org/get-started/locally/) 建立 **ResNet34** ，对114人的多角度人像进行分类预测，即输入测试图片后返回人物的对应标签。  
 代码在[code.py](https://github.com/yang-zhou-x/assignments/blob/master/resnet34_face_recognition/code.py)
 
 每个人包含7张照片：左侧脸照、45°照、正面照、135°照、右侧脸照、正面照（不露齿笑）和正面照（露齿笑），极少数存在不足7张或超过7张的情况。
