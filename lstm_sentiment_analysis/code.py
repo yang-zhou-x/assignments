@@ -110,7 +110,7 @@ def get_stop_words():
     """
     读取停用词表，含标点符号
     # return
-        list[str], 停用词表/符号
+        set[str], 停用词表/符号
     """
     def iter_file(path):
         with open(path, encoding='utf-8') as file:
@@ -120,7 +120,7 @@ def get_stop_words():
     for word in iter_file(os.path.join(init_path, 'datasets/cn_stopwords_punctuations.csv')):
         res.append(word.strip('\n'))
     res += ['\ufeff', ' ']
-    return res
+    return set(res)
 
 
 stops = get_stop_words()
@@ -130,6 +130,9 @@ stops = get_stop_words()
 def pre_transform(string, stop_words):
     """
     对一条评论进行分词、去除停用词和标点符号后，以空格分隔重新拼接
+    # 参数
+        string: str, 待分词的单条文本
+        stop_words: set[str], 停用词/标点符号
     # return
         str, 分好词的评论
     """
