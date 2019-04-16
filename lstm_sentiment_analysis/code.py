@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on 2019
-@author: Yang Zhou
+@Time    :   2019
+@Author  :   ZHOU, YANG 
+@Contact :   yzhou0000@gmail.com
 """
 
 import os
