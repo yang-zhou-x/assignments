@@ -1,5 +1,5 @@
 ## 基于PySpark的中文情感分析
-本文使用 [**PySpark**](https://spark.apache.org/docs/latest/api/python/index.html) 框架搭建对于中文商品评论的分布式情感分析模型，在测试集上的准确率为85.48%。  
+本文使用[**PySpark**](https://spark.apache.org/docs/latest/api/python/index.html)框架搭建对于中文商品评论的分布式情感分析模型，在测试集上的准确率为85.48%。  
 模型基于 **TF-IDF** 和 **Naive Bayes** 构建。代码在[code.py](https://github.com/yang-zhou-x/assignments/blob/master/naiveBayes_sentiment_analysis/code.py)  
 对于文本的预处理包括标识化处理、移除停用词和标点符号等。
 
