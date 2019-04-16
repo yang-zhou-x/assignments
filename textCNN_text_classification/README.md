@@ -1,6 +1,6 @@
 (TODO)  
 ## 基于text CNN的中文新闻分类
-本文使用 [**Keras**](https://keras.io/) 框架搭建对于中文新闻的文本分类模型。  
+使用 [**Keras**](https://keras.io/) 框架搭建对于中文新闻的文本分类模型。  
 代码在[code.py]()  
 对于文本的预处理包括标识化处理、特征选取、移除标点符号、移除英文和数字、序列对齐等。  
 
@@ -13,6 +13,8 @@
 ## 数据来源
 [THUCNews中文文本数据集](http://thuctc.thunlp.org/#%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E6%95%B0%E6%8D%AE%E9%9B%86THUCNews)  
 THUCNews是根据新浪新闻RSS订阅频道2005~2011年间的历史数据筛选过滤生成，包含74万篇新闻文档（2.19 GB），均为UTF-8纯文本格式。THUCNews包含14个类别：财经、彩票、房产、股票、家居、教育、科技、社会、时尚、时政、体育、星座、游戏、娱乐。使用[THUCTC工具包](http://thuctc.thunlp.org/)在此数据集上进行评测，准确率为88.6%（baseline）。
+
+## 模型结果
 
 ## 环境配置
 tensorflow-gpu==1.13.1  
