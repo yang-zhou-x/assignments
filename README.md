@@ -1,5 +1,8 @@
 # projects
 
+[基于text CNN的中文新闻分类](https://github.com/yang-zhou-x/assignments/tree/master/textCNN_text_classification)  
+(TODO) 使用Keras实现，backend为TensorFlow。 使用THUCNews数据集。
+
 [基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/lstm_sentiment_analysis)  
 (179 sloc) 使用Keras实现，backend为TensorFlow。
 
