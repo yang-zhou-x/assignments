@@ -37,6 +37,7 @@ def time_elapse(func):
 def files_info(init_path, return_num=False):
     """
     返回文本类别标签，并进行分类计数，不读取文件。
+    
     # 参数
         init_path: str, 项目的根目录
         return_num: (optinal) bool, 是否计数
@@ -58,6 +59,7 @@ def files_info(init_path, return_num=False):
 def get_texts(init_path):
     """
     读取文本。  
+    
     # 参数
         init_path: str, 项目的根目录
     # return
@@ -89,6 +91,7 @@ def get_texts(init_path):
 def text_tokenize(x_texts, stopwords=None, use_stopwords=False):
     """
     文本分词。
+    
     # 参数
         x_texts: list[str], 原始文本数据
         stopwords: (optional) set[str], 停用词/标点符号等
@@ -110,6 +113,7 @@ def text_tokenize(x_texts, stopwords=None, use_stopwords=False):
 def get_stopwords(word_path):
     """
     获取停用词/标点符号。
+    
     # 参数
         word_path: str, 停用词/标点符号表所在路径
     # return
@@ -125,6 +129,7 @@ def get_stopwords(word_path):
 def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
     """
     将分词文本转化为对齐后的整数序列。
+    
     # 参数
         x_train: list[str], 训练集
         x_test: list[str], 测试集
@@ -149,6 +154,7 @@ def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
 def encode_y(y_labels):
     """
     编码标签。
+    
     # 参数
         y_labels: list[str], 原始标签
     # return
