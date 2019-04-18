@@ -8,11 +8,9 @@
 import os
 import time
 import numpy as np
-import pandas as pd
 import jieba
 from tqdm import tqdm
 from collections import defaultdict
-
 from sklearn.preprocessing import LabelEncoder
 from keras.preprocessing import text, sequence
 from keras.utils import to_categorical
@@ -35,9 +33,8 @@ def time_elapse(func):
 
 @time_elapse
 def files_info(init_path, return_num=False):
-    """
-    返回文本类别标签，并进行分类计数，不读取文件。
-    
+    """返回文本类别标签，并进行分类计数，不读取文件。
+
     # 参数
         init_path: str, 项目的根目录
         return_num: (optinal) bool, 是否计数
@@ -56,17 +53,16 @@ def files_info(init_path, return_num=False):
 
 
 @time_elapse
-def get_texts(init_path):
-    """
-    读取文本。  
-    
+def get_texts(data_path):
+    """读取文本。  
+
     # 参数
-        init_path: str, 项目的根目录
+        data_path: str, 数据集所在目录
     # return
         x_texts: list[str], 原始文本数据
         y_labels: list[str], 原始标签
     """
-    labels_path = os.path.join(init_path, 'datasets/THUCNews')
+    labels_path = data_path
     labels = os.listdir(labels_path)
     tot = 0
     for l in labels:
@@ -84,14 +80,12 @@ def get_texts(init_path):
                 y_labels[idx] = l
             idx += 1
     return x_texts, y_labels
-    # Used Memory: about 1604MB
 
 
 @time_elapse
 def text_tokenize(x_texts, stopwords=None, use_stopwords=False):
-    """
-    文本分词。
-    
+    """文本分词。
+
     # 参数
         x_texts: list[str], 原始文本数据
         stopwords: (optional) set[str], 停用词/标点符号等
@@ -111,9 +105,8 @@ def text_tokenize(x_texts, stopwords=None, use_stopwords=False):
 
 
 def get_stopwords(word_path):
-    """
-    获取停用词/标点符号。
-    
+    """获取停用词/标点符号。
+
     # 参数
         word_path: str, 停用词/标点符号表所在路径
     # return
@@ -127,9 +120,8 @@ def get_stopwords(word_path):
 
 @time_elapse
 def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
-    """
-    将分词文本转化为对齐后的整数序列。
-    
+    """将分词文本转化为对齐后的整数序列。
+
     # 参数
         x_train: list[str], 训练集
         x_test: list[str], 测试集
@@ -147,14 +139,12 @@ def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
     x_test = sequence.pad_sequences(token.texts_to_sequences(x_test),
                                     maxlen=pad_len, padding='pre', truncating='post')
     return x_train, x_test, token.index_word
-    # Used time: 437.38 seconds.
 
 
 @time_elapse
 def encode_y(y_labels):
-    """
-    编码标签。
-    
+    """编码标签。
+
     # 参数
         y_labels: list[str], 原始标签
     # return
