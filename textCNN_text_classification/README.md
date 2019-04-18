@@ -14,6 +14,8 @@ THUCNews是根据新浪新闻RSS订阅频道2005~2011年间的历史数据筛选
 ## 模型结果
 
 ## 环境配置
+CUDA 9.2  
+cuDNN 7.3.1  
 tensorflow-gpu==1.13.1  
 keras-gpu==2.2.4  
 
