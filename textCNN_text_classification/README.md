@@ -22,6 +22,8 @@ THUCTC工具包在THUCNews数据集上的[测试结果](http://thuctc.thunlp.org
 预测结果的混淆矩阵如下所示：
 ![confusion_matrix.png](https://github.com/yang-zhou-x/assignments/blob/master/others/confusion_matrix.png)
 
+其他：运行过程中，内存占用最高不超过6GB。
+
 ## 环境配置
 CUDA 9.2  
 cuDNN 7.3.1  
