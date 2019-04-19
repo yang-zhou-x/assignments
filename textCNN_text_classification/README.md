@@ -1,7 +1,8 @@
 ## 基于text CNN的中文新闻分类
-使用[**Keras**](https://keras.io/)框架搭建中文的新闻分类模型，并在GPU上训练和测试。backend为TensorFlow。  
+使用[**Keras**](https://keras.io/)搭建中文的新闻分类模型，并在GPU上训练和测试。backend为TensorFlow。  
 数据预处理代码在[getData_THUCNews.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/getData_THUCNews.py)，模型部分的代码在[model.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/model.py)  
 对于新闻文本的预处理包括标识化、特征提取、移除标点符号、移除英文和数字、序列对齐等。  
+模型使用的特征为分词后长度大于1的词。  
 
 模型结构：
 ![textCNN_summary.PNG](https://github.com/yang-zhou-x/assignments/blob/master/others/textCNN_summary.PNG)
@@ -25,8 +26,8 @@ THUCTC工具包在THUCNews数据集上的[测试结果](http://thuctc.thunlp.org
 其他：运行过程中，内存占用最高不超过6GB。
 
 ## 环境配置
-CUDA 9.2  
-cuDNN 7.3.1  
+CUDA==9.2  
+cuDNN==7.3.1  
 tensorflow-gpu==1.13.1  
 keras-gpu==2.2.4  
 
