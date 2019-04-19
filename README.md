@@ -1,4 +1,4 @@
-# projects
+# Projects
 
 [基于text CNN的中文新闻分类](https://github.com/yang-zhou-x/assignments/tree/master/textCNN_text_classification)  
 (337 sloc) 使用Keras实现，backend为TensorFlow的GPU版本。 使用THUCNews数据集。
