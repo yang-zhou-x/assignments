@@ -114,7 +114,7 @@ def get_stopwords(word_path):
     """
     with open(word_path, encoding='utf-8') as f:
         res = f.readlines()
-    res = [x.strip('\n') for x in res] + ['\ufeff', ' ']
+    res = [x.strip('\n') for x in res] + ['\ufeff', ' ', '\t', '\n', '\r', '\u3000']
     return set(res)
 
 
@@ -142,18 +142,24 @@ def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
 
 
 @time_elapse
-def encode_y(y_labels):
+def encode_y(y_labels, num_classes):
     """编码标签。
 
     # 参数
         y_labels: list[str], 原始标签
+        num_classes: int, 文本类别数量
     # return
         y_labels: array[int], one-hot编码后的标签
         le.classes_: list[str], 文本标签
     """
     le = LabelEncoder()
     y_labels = le.fit_transform(y_labels)
-    y_labels = to_categorical(y_labels, dtype='int32')
+    if num_classes == 2:
+        pass
+    elif num_classes > 2:
+        y_labels = to_categorical(y_labels, dtype='int32')
+    else:
+        raise ValueError('Wrong number of classes.')
     return y_labels, list(le.classes_)
 
 
