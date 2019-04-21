@@ -1,8 +1,7 @@
 ## 基于text CNN的中文新闻分类
 使用[**Keras**](https://keras.io/)搭建中文的新闻分类模型，并在GPU上训练和测试。backend为TensorFlow。  
 数据预处理代码在[getData_THUCNews.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/getData_THUCNews.py)，模型部分的代码在[model.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/model.py)  
-对于新闻文本的预处理包括标识化、特征提取、移除标点符号、移除英文和数字、序列对齐等。  
-模型使用的特征为分词后长度大于1的词。  
+对于新闻文本的预处理包括分词、移除停用词、移除标点符号、移除英文和数字、序列对齐等。  
 
 模型结构：
 ![textCNN_summary.PNG](https://github.com/yang-zhou-x/assignments/blob/master/others/textCNN_summary.PNG)
@@ -16,9 +15,9 @@ THUCTC工具包在THUCNews数据集上的[测试结果](http://thuctc.thunlp.org
 ![THUCTC_result.PNG](https://github.com/yang-zhou-x/assignments/blob/master/others/THUCTC_result.PNG)  
 
 本文text CNN模型的测试结果（测试集比例同为0.2）：  
-![clf_report.PNG](https://github.com/yang-zhou-x/assignments/blob/master/others/clf_report.PNG)
+![clf_report.PNG](https://github.com/yang-zhou-x/assignments/blob/master/others/textCNN_clf_report.PNG)
 
-可以看出，本文模型在绝大多数类别上的precision、recall和F1分数都高于THUCTC工具包的结果。综合准确率达到了93.9%（micro avg），提升了6.4%。
+可以看出，本文模型在绝大多数类别上的precision、recall和F1分数都高于THUCTC工具包的结果。综合准确率达到了93.97%（micro avg），提升了6.47%。
 
 预测结果的混淆矩阵如下所示：
 ![confusion_matrix.png](https://github.com/yang-zhou-x/assignments/blob/master/others/confusion_matrix.png)
