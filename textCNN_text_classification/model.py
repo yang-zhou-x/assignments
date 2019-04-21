@@ -23,6 +23,7 @@ import getData_THUCNews
 
 
 # 设定参数
+num_target_classes = 14  # 文本类别数量
 dict_size = 10000  # 词典词数
 max_sequence_len = 256  # 文本序列的长度
 embedding_dimension = 128  # 词嵌入维度
@@ -124,18 +125,21 @@ def text_cnn_model(num_features,
 
 
 def main():
-    # 准备数据
     print('Loading data...')
     x_texts, y_labels = getData_THUCNews.get_texts(data_path)
-    x_texts = getData_THUCNews.text_tokenize(x_texts)
-    y_labels, labels_name = getData_THUCNews.encode_y(y_labels)
+    
+    stopword_path = os.path.join(
+        init_path, 'datasets/cn_stopwords_punctuations.csv')
+    stopwords = getData_THUCNews.get_stopwords(stopword_path)
+    
+    x_texts = getData_THUCNews.text_tokenize(x_texts, stopwords, True)
+    y_labels, labels_name = getData_THUCNews.encode_y(y_labels, num_target_classes)
+    
     x_train, x_test, y_train, y_test = train_test_split(
         x_texts, y_labels, test_size=0.2, random_state=2019)
     x_train, x_test, index_word = getData_THUCNews.texts_to_pad_sequences(
         x_train, x_test, dict_size, max_sequence_len)
     
-    # 文本的类别数量
-    num_target_classes = len(labels_name)
     # 确定模型的最后一层
     options_last_layer = _get_last_layer_options(num_target_classes)
 
