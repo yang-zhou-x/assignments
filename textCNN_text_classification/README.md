@@ -17,7 +17,7 @@ THUCTC(THU Chinese Text Classification)是由清华大学自然语言处理实�
 THUCTC工具包在THUCNews数据集上的[测试结果](http://thuctc.thunlp.org/#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C)为：  
 ![THUCTC_result.PNG](https://github.com/yang-zhou-x/assignments/blob/master/others/THUCTC_result.PNG)  
 
-本文text CNN模型的测试结果（测试集比例同为0.2）：  
+本文Text-CNN模型的测试结果（测试集比例同为0.2）：  
 ![clf_report.PNG](https://github.com/yang-zhou-x/assignments/blob/master/others/textCNN_clf_report.PNG)
 
 可以看出，本文模型在绝大多数类别上的precision、recall和F1分数都高于THUCTC工具包的结果。综合准确率达到了93.97%（micro avg），提升了6.47%。
