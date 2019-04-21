@@ -1,4 +1,4 @@
-## 基于text CNN的中文新闻分类
+## 基于Text-CNN的中文新闻分类
 使用[**Keras**](https://keras.io/)搭建中文的新闻分类模型，并在GPU上训练和测试。backend为TensorFlow。  
 数据预处理代码在[getData_THUCNews.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/getData_THUCNews.py)，模型部分的代码在[model.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/model.py)  
 对于新闻文本的预处理包括分词、移除停用词、移除标点符号、移除英文和数字、序列对齐等。  
