@@ -265,8 +265,9 @@ def main():
     # 输出结果：precision,recall,F1
     print('-' * 30)
     print('Printing classification report...')
-    clf_report = classification_report(
-        y_true, y_pred, target_names=labels_name)
+    clf_report = classification_report(y_true, y_pred,
+                                       target_names=labels_name,
+                                       digits=4)
     print(clf_report)
 
     # 绘制混淆矩阵热力图
@@ -278,6 +279,7 @@ def main():
     ax = sns.heatmap(conf_m, xticklabels=labels_name, yticklabels=labels_name,
                      annot=True, fmt="d", cmap="YlGnBu")
     plt.title('Confusion Matrix on Predictions')
+    plt.tight_layout()
     plt.show()
 
 
