@@ -164,7 +164,7 @@ def encode_y(y_labels, num_classes):
 
 
 def main():
-    print('Generally, it will take a long time to use get_texts() and text_tokenize().')
+    print('Generally, it will take a long time to use get_texts_from_source() and texts_tokenize().')
 
 
 if __name__ == '__main__':
