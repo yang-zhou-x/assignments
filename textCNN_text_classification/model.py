@@ -120,7 +120,6 @@ def text_cnn_model(num_features,
                      kernel_size=size,
                      padding='same',
                      strides=1)(outputs)
-        # cnn = BatchNormalization()(cnn)
         cnn = Activation('relu')(cnn)
         cnn = MaxPooling1D(pool_size=pool_size,
                            padding='valid')(cnn)
@@ -131,11 +130,9 @@ def text_cnn_model(num_features,
     outputs = Flatten()(outputs)
     # 全连接层
     outputs = Dense(fc_units)(outputs)
-    # outputs = BatchNormalization()(outputs)
     outputs = Activation('relu')(outputs)
     last_units, last_activation = options_last_layer[:2]
     outputs = Dense(last_units)(outputs)
-    # outputs = BatchNormalization()(outputs)
     outputs = Activation(last_activation)(outputs)
     model = Model(inputs=inputs, outputs=outputs)
     return model
@@ -144,7 +141,6 @@ def text_cnn_model(num_features,
 def main():
     print('-' * 30)
     print('Loading data...')
-    # 初次读取时：
     x_texts, y_labels = gd.get_texts_from_source(data_path)
 
     print('-' * 30)
@@ -166,8 +162,6 @@ def main():
     print('Encoding y...')
     y_labels, labels_name = gd.encode_y(
         y_labels, num_target_classes)
-    # Used time: 0.21 seconds. i5-7300HQ
-    # Used time: 0.14 seconds. i5-8259u
 
     print('-' * 30)
     print('Spliting train/test datasets...')
@@ -178,8 +172,6 @@ def main():
     print('Vectorizing texts and padding sequences...')
     x_train, x_test, index_word = gd.texts_to_pad_sequences(
         x_train, x_test, dict_size, max_sequence_len)
-    # Used time: 388.72 seconds. i5-7300HQ
-    # Used time: 326.60 seconds. i5-8259u
 
     # 确定模型的最后一层
     options_last_layer = _get_last_layer_options(num_target_classes)
@@ -281,8 +273,8 @@ def main():
     print('-' * 30)
     print('Plotting confusion matrix...')
     conf_m = confusion_matrix(y_true, y_pred)
-    plt.rcParams['font.sans-serif'] = ['SimHei']  # 选择字体
-    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
     ax = sns.heatmap(conf_m, xticklabels=labels_name, yticklabels=labels_name,
                      annot=True, fmt="d", cmap="YlGnBu")
     plt.title('Confusion Matrix on Predictions')
