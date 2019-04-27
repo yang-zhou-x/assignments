@@ -1,7 +1,7 @@
 # Projects
 
 [基于Text-CNN的中文新闻分类](https://github.com/yang-zhou-x/assignments/tree/master/textCNN_text_classification)  
-(344 sloc) 使用Keras实现，backend为TensorFlow的GPU版本。使用THUCNews数据集，准确率93.97%。
+(397 sloc) 使用Keras实现，backend为TensorFlow的GPU版本。使用THUCNews数据集，准确率94.12%。
 
 [基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/lstm_sentiment_analysis)  
 (179 sloc) 使用Keras实现，backend为TensorFlow的GPU版本。使用网购评论数据，准确率为90.42%
