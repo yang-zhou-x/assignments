@@ -17,8 +17,7 @@ from keras.utils import to_categorical
 
 
 def time_elapse(func):
-    """
-    decorator, 计时
+    """decorator, 计时。
     """
     def aux(*args, **kwargs):
         t0 = time.time()
@@ -32,33 +31,32 @@ def time_elapse(func):
 
 
 @time_elapse
-def files_info(init_path, return_num=False):
+def files_info(data_path, return_num=False):
     """返回文本类别标签，并进行分类计数，不读取文件。
 
-    # 参数
-        init_path: str, 项目的根目录
+    # Parameters
+        data_path: str, 数据集的根目录
         return_num: (optinal) bool, 是否计数
-    # return
-        texts_info: dict[str:list], 标签类别，（和各类文本数量）
+    # Returns
+        texts_info: dict[str:list], 标签类别（和各类文本数量）
     """
     texts_info = defaultdict(list)
-    labels_path = os.path.join(init_path, 'datasets/THUCNews')
-    labels = os.listdir(labels_path)
+    labels = os.listdir(data_path)
     for l in labels:
         texts_info['label'].append(l)
         if return_num:
-            texts_path = os.path.join(labels_path, l)
+            texts_path = os.path.join(data_path, l)
             texts_info['num'].append(len(os.listdir(texts_path)))
     return texts_info
 
 
 @time_elapse
-def get_texts(data_path):
+def get_texts_from_source(data_path):
     """读取文本。  
 
-    # 参数
-        data_path: str, 数据集所在目录
-    # return
+    # Parameters
+        data_path: str, 数据集的根目录
+    # Returns
         x_texts: list[str], 原始文本数据
         y_labels: list[str], 原始标签
     """
@@ -83,38 +81,40 @@ def get_texts(data_path):
 
 
 @time_elapse
-def text_tokenize(x_texts, stopwords=None, use_stopwords=False):
-    """文本分词。
+def texts_tokenize(texts, stopwords=None, character_level=False):
+    """获取分词后空格分隔的文本。
 
-    # 参数
-        x_texts: list[str], 原始文本数据
+    # Parameters
+        texts: list[str], 原始中文文本
         stopwords: (optional) set[str], 停用词/标点符号等
-        use_stopwords: (optional) bool, 是否用停用词。否，则过滤掉长度小于2的词。
-    # return
-        x_texts: list[str], 分词后的文本数据
+        character_level: (Optional) bool, 是否为单字级别
+    # Returns
+        texts: list[str], 分词后空格分隔的文本，去除了数字、英文(和停用词)
     """
-    def tokenize(string):
-        if use_stopwords:
-            return ' '.join(x for x in jieba.cut(string)
-                            if x not in stopwords and not x.encode('utf-8').isalnum())
+    if stopwords is None:
+        stopwords = ()
+    for idx, t in tqdm(enumerate(texts), desc='Cutting texts'):
+        res = (x for x in cut(t)
+               if x not in stopwords and not x.encode('utf-8').isalnum())
+        if character_level:
+            texts[idx] = ' '.join(xx for x in res for xx in x)
         else:
-            return ' '.join(x for x in jieba.cut(string)
-                            if len(x) > 1 and not x.encode('utf-8').isalnum())
-    x_texts = map(tokenize, x_texts)
-    return list(x_texts)
+            texts[idx] = ' '.join(res)
+    return texts
 
 
 def get_stopwords(word_path):
     """获取停用词/标点符号。
 
-    # 参数
+    # Parameters
         word_path: str, 停用词/标点符号表所在路径
-    # return
+    # Returns
         res: set[str], 停用词/标点符号
     """
     with open(word_path, encoding='utf-8') as f:
-        res = f.readlines()
-    res = [x.strip('\n') for x in res] + ['\ufeff', ' ', '\t', '\n', '\r', '\u3000']
+        res = f.readlines()  # list
+    res = [x.strip('\n') for x in res] + ['\ufeff',
+                                          ' ', '\t', '\n', '\r', '\u3000']
     return set(res)
 
 
@@ -122,15 +122,15 @@ def get_stopwords(word_path):
 def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
     """将分词文本转化为对齐后的整数序列。
 
-    # 参数
+    # Parameters
         x_train: list[str], 训练集
         x_test: list[str], 测试集
         dict_size: int, 字典大小（特征数量）
         pad_len: int, 对齐的长度
-    # return
+    # Returns
         x_train: list[str], 训练集
         x_test: list[str], 测试集
-        token.index_word: 词索引
+        token.index_word: np.ndarray, 词典索引
     """
     token = text.Tokenizer(num_words=dict_size)
     token.fit_on_texts(x_train)
@@ -145,19 +145,19 @@ def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
 def encode_y(y_labels, num_classes):
     """编码标签。
 
-    # 参数
+    # Parameters
         y_labels: list[str], 原始标签
         num_classes: int, 文本类别数量
-    # return
+    # Returns
         y_labels: array[int], one-hot编码后的标签
-        le.classes_: list[str], 文本标签
+        le.classes_: list[str], 原始类别标签
     """
     le = LabelEncoder()
     y_labels = le.fit_transform(y_labels)
     if num_classes == 2:
         pass
     elif num_classes > 2:
-        y_labels = to_categorical(y_labels, dtype='int32')
+        y_labels = to_categorical(y_labels, dtype='int8')
     else:
         raise ValueError('Wrong number of classes.')
     return y_labels, list(le.classes_)
