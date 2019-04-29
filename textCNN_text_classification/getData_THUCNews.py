@@ -8,11 +8,12 @@
 import os
 import time
 import numpy as np
-import jieba
+from jieba import cut
 from tqdm import tqdm
 from collections import defaultdict
 from sklearn.preprocessing import LabelEncoder
-from keras.preprocessing import text, sequence
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
 
 
@@ -31,7 +32,7 @@ def time_elapse(func):
 
 
 @time_elapse
-def files_info(data_path, return_num=False):
+def files_info(data_path, return_num=True):
     """返回文本类别标签，并进行分类计数，不读取文件。
 
     # Parameters
@@ -130,15 +131,15 @@ def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
     # Returns
         x_train: list[str], 训练集
         x_test: list[str], 测试集
-        token.index_word: np.ndarray, 词典索引
+        token: Text tokenization utility class
     """
-    token = text.Tokenizer(num_words=dict_size)
+    token = Tokenizer(num_words=dict_size)
     token.fit_on_texts(x_train)
-    x_train = sequence.pad_sequences(token.texts_to_sequences(x_train),
-                                     maxlen=pad_len, padding='pre', truncating='post')
-    x_test = sequence.pad_sequences(token.texts_to_sequences(x_test),
-                                    maxlen=pad_len, padding='pre', truncating='post')
-    return x_train, x_test, token.index_word
+    x_train = pad_sequences(token.texts_to_sequences(x_train),
+                            maxlen=pad_len, padding='pre', truncating='post')
+    x_test = pad_sequences(token.texts_to_sequences(x_test),
+                           maxlen=pad_len, padding='pre', truncating='post')
+    return x_train, x_test, token
 
 
 @time_elapse
