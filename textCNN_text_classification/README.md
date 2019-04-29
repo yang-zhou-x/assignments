@@ -13,7 +13,7 @@ THUCTC(THU Chinese Text Classification)是由清华大学自然语言处理实�
 各类别文本长度的均值、最大值、中位数和最小值：  
 ![seq_len.png](https://github.com/yang-zhou-x/assignments/blob/master/others/THUCNews_len.PNG)
 
-## 模型结果
+## 结果对比
 THUCTC工具包在THUCNews数据集上的[测试结果](http://thuctc.thunlp.org/#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C)(baseline)为：  
 ![THUCTC_baseline.PNG](https://github.com/yang-zhou-x/assignments/blob/master/others/THUCTC_baseline.PNG)  
 
