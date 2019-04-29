@@ -131,15 +131,15 @@ def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
     # Returns
         x_train: list[str], 训练集
         x_test: list[str], 测试集
-        token: Text tokenization utility class
+        tokenizer: Text tokenization utility class
     """
-    token = Tokenizer(num_words=dict_size)
-    token.fit_on_texts(x_train)
-    x_train = pad_sequences(token.texts_to_sequences(x_train),
+    tokenizer = Tokenizer(num_words=dict_size)
+    tokenizer.fit_on_texts(x_train)
+    x_train = pad_sequences(tokenizer.texts_to_sequences(x_train),
                             maxlen=pad_len, padding='pre', truncating='post')
-    x_test = pad_sequences(token.texts_to_sequences(x_test),
+    x_test = pad_sequences(tokenizer.texts_to_sequences(x_test),
                            maxlen=pad_len, padding='pre', truncating='post')
-    return x_train, x_test, token
+    return x_train, x_test, tokenizer
 
 
 @time_elapse
