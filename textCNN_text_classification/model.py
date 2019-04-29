@@ -24,6 +24,7 @@ import getData_THUCNews as gd
 
 
 # 设定参数
+seed = 2019
 num_target_classes = 14  # 文本类别数量
 dict_size = 10000  # 词汇表大小
 character_level = False  # 是否为单字级别的token
@@ -166,11 +167,11 @@ def main():
     print('-' * 30)
     print('Spliting train/test datasets...')
     x_train, x_test, y_train, y_test = train_test_split(
-        x_texts, y_labels, test_size=0.2, random_state=2019)
+        x_texts, y_labels, test_size=0.2, random_state=seed)
 
     print('-' * 30)
     print('Vectorizing texts and padding sequences...')
-    x_train, x_test, index_word = gd.texts_to_pad_sequences(
+    x_train, x_test, tokenizer = gd.texts_to_pad_sequences(
         x_train, x_test, dict_size, max_sequence_len)
 
     # 确定模型的最后一层
