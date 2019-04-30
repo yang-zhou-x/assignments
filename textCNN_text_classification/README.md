@@ -1,5 +1,7 @@
 ## 基于Text-CNN的中文新闻分类
-使用[**Keras**](https://keras.io/)搭建中文的新闻分类模型，并在GPU上训练和测试。backend为TensorFlow。准确率为94.122%，较baseline提升了5.722%。  
+使用[**Keras**](https://keras.io/)搭建中文的新闻分类模型，并在GPU上训练和测试。backend为TensorFlow。  
+准确率(micro avg)为94.122%，较baseline提升了5.722%。
+
 数据预处理部分的代码在[preprocess.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/preprocess.py)  
 模型定义部分的代码在[models.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/models.py)  
 模型训练部分的代码在[train.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/train.py)  
