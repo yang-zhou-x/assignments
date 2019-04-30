@@ -7,6 +7,7 @@
 
 import os
 import time
+import pickle
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -14,14 +15,12 @@ from sklearn.metrics import classification_report, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from keras.models import Model, load_model
-from keras.layers import Dense, Activation, Dropout, Input, Flatten
-from keras.layers import Embedding, Conv1D, MaxPooling1D, concatenate
+from keras.models import load_model
 from keras.optimizers import Adam
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 
 import preprocess as pp
-
+import models as m
 
 # 设定参数
 seed = 2019
@@ -48,11 +47,13 @@ if not os.path.isdir(save_dir):
     os.makedirs(save_dir)
 model_name = 'TextCNN_THUCNews.hdf5'  # 模型名称
 model_path = os.path.join(save_dir, model_name)  # 模型持久化路径
+tokenizer_path = os.path.join(save_dir, 'tokenizer.pickle')  # tokenizer路径
+
 
 def main():
     print('-' * 30)
     print('Loading data...')
-    x_texts, y_labels = gd.get_texts_from_source(data_path)
+    x_texts, y_labels = pp.get_texts_from_source(data_path)
 
     print('-' * 30)
     print('Computing the mean/max/median/min length of texts...')
@@ -64,14 +65,14 @@ def main():
     print('-' * 30)
     print('Tokenizing...')
     if use_stopwords:
-        stopwords = gd.get_stopwords(stopwords_path)
+        stopwords = pp.get_stopwords(stopwords_path)
     else:
         stopwords = None
-    x_texts = gd.texts_tokenize(x_texts, stopwords, character_level)
+    x_texts = pp.texts_tokenize(x_texts, stopwords, character_level)
 
     print('-' * 30)
     print('Encoding y...')
-    y_labels, labels_name = gd.encode_y(
+    y_labels, labels_name = pp.encode_y(
         y_labels, num_target_classes)
 
     print('-' * 30)
@@ -81,22 +82,24 @@ def main():
 
     print('-' * 30)
     print('Vectorizing texts and padding sequences...')
-    x_train, x_test, tokenizer = gd.texts_to_pad_sequences(
+    x_train, x_test, tokenizer = pp.texts_to_pad_sequences(
         x_train, x_test, dict_size, max_sequence_len)
+    with open(tokenizer_path, 'wb') as f:
+        pickle.dump(tokenizer, f)  # preserve tokenizer
 
     # 确定模型的最后一层
-    options_last_layer = _get_last_layer_options(num_target_classes)
+    options_last_layer = m.get_last_layer_options(num_target_classes)
 
     print('-' * 30)
     print('Building model...')
-    model = text_cnn_model(num_features=dict_size,
-                           sequence_len=max_sequence_len,
-                           embedding_dim=embedding_dimension,
-                           filters=num_filters,
-                           pool_size=pool_size,
-                           dropout_rate=drop_out_rate,
-                           fc_units=fc_units,
-                           options_last_layer=options_last_layer)
+    model = m.text_cnn_model(num_features=dict_size,
+                             sequence_len=max_sequence_len,
+                             embedding_dim=embedding_dimension,
+                             filters=num_filters,
+                             pool_size=pool_size,
+                             dropout_rate=drop_out_rate,
+                             fc_units=fc_units,
+                             options_last_layer=options_last_layer)
     model.summary()
 
     print('-' * 30)
@@ -185,8 +188,8 @@ def main():
     print('-' * 30)
     print('Plotting confusion matrix...')
     conf_m = confusion_matrix(y_true, y_pred)
-    plt.rcParams['font.sans-serif'] = ['SimHei']
-    plt.rcParams['axes.unicode_minus'] = False
+    plt.rcParams['font.sans-serif'] = ['SimHei']  # 选择字体
+    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
     ax = sns.heatmap(conf_m, xticklabels=labels_name, yticklabels=labels_name,
                      annot=True, fmt="d", cmap="YlGnBu")
     plt.title('Confusion Matrix on Predictions')
