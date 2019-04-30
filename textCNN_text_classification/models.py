@@ -12,6 +12,7 @@ from keras.layers import Embedding, Conv1D, MaxPooling1D, concatenate
 
 def get_last_layer_options(num_classes):
     """获取输出层的units数量、激活函数、损失函数。
+    
     # Parameters
         num_classes: int, 输出类别的数量。
     # Returns
@@ -45,6 +46,7 @@ def text_cnn_model(num_features,
                    is_embedding_trainable=False,
                    embedding_matrix=None):
     """创建一个Text-CNN模型的实例。
+    
     # Parameters
         num_features: int, 词汇表大小，也是embedding层的输入维度
         sequence_len: int, 输入序列的长度
