@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 '''
-@Time : 2019/04/30 15:52
+@Time : 2019
 @Author : ZHOU, YANG 
-@Contact : zhouyang0995@ruc.edu.cn
+@Contact : yzhou0000@gmail.com
 '''
 
 import os
