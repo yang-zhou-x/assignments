@@ -68,7 +68,7 @@ def main():
         stopwords = pp.get_stopwords(stopwords_path)
     else:
         stopwords = None
-    x_texts = pp.texts_tokenize(x_texts, stopwords, character_level)
+    x_texts = pp.tokenize_texts(x_texts, stopwords, character_level)
 
     print('-' * 30)
     print('Encoding y...')
