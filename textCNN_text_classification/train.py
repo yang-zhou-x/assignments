@@ -83,7 +83,7 @@ def main():
     print('-' * 30)
     print('Vectorizing texts and padding sequences...')
     x_train, x_test, tokenizer = pp.texts_to_pad_sequences(
-        x_train, x_test, dict_size, max_sequence_len)
+        x_train, max_sequence_len, dict_size, x_test)
     with open(tokenizer_path, 'wb') as f:
         pickle.dump(tokenizer, f)  # preserve tokenizer
 
