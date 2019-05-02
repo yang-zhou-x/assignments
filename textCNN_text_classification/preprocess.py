@@ -82,7 +82,7 @@ def get_texts_from_source(data_path):
 
 
 @time_elapse
-def texts_tokenize(texts, stopwords=None, character_level=False):
+def tokenize_texts(texts, stopwords=None, character_level=False):
     """获取分词后空格分隔的文本。
 
     # Parameters
@@ -120,26 +120,33 @@ def get_stopwords(word_path):
 
 
 @time_elapse
-def texts_to_pad_sequences(x_train, x_test, dict_size, pad_len):
+def texts_to_pad_sequences(x_train, pad_len, dict_size=None,
+                           x_test=None, tokenizer=None):
     """将分词文本转化为对齐后的整数序列。
 
     # Parameters
         x_train: list[str], 训练集
-        x_test: list[str], 测试集
-        dict_size: int, 字典大小（特征数量）
         pad_len: int, 对齐的长度
+        dict_size: (optional) int, 字典大小（特征数量）
+        x_test: (optional) list[str], 测试集
+        tokenizer: (optional) keras text tokenization utility class
     # Returns
         x_train: list[str], 训练集
-        x_test: list[str], 测试集
+        x_test: (optional) list[str], 测试集
         tokenizer: Text tokenization utility class
     """
-    tokenizer = Tokenizer(num_words=dict_size)
-    tokenizer.fit_on_texts(x_train)
-    x_train = pad_sequences(tokenizer.texts_to_sequences(x_train),
-                            maxlen=pad_len, padding='pre', truncating='post')
-    x_test = pad_sequences(tokenizer.texts_to_sequences(x_test),
-                           maxlen=pad_len, padding='pre', truncating='post')
-    return x_train, x_test, tokenizer
+    if tokenizer is None:
+        tokenizer = Tokenizer(num_words=dict_size)
+        tokenizer.fit_on_texts(x_train)
+    x_train = tokenizer.texts_to_sequences(x_train)
+    x_train = pad_sequences(x_train, maxlen=pad_len,
+                            padding='pre', truncating='post')
+    if x_test is not None:
+        x_test = tokenizer.texts_to_sequences(x_test)
+        x_test = pad_sequences(x_test, maxlen=pad_len,
+                               padding='pre', truncating='post')
+        return x_train, x_test, tokenizer
+    return x_train, tokenizer
 
 
 @time_elapse
@@ -166,7 +173,7 @@ def encode_y(y_labels, num_classes):
 
 def main():
     print('This module is used for pre-processing data.')
-    print('Generally, it will take a long time to use get_texts_from_source() and texts_tokenize().')
+    print('Generally, it will take a long time to use get_texts_from_source() and tokenize_texts().')
 
 
 if __name__ == '__main__':
