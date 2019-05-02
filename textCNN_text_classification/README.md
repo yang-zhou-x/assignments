@@ -5,7 +5,7 @@
 数据预处理部分的代码在[preprocess.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/preprocess.py)  
 模型定义部分的代码在[models.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/models.py)  
 模型训练部分的代码在[train.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/train.py)  
-模型预测部分的代码在  
+模型预测部分的代码在[predict.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/predict.py)  
 对于新闻文本的预处理包括分词、移除停用词、移除标点符号、移除英文和数字、序列对齐等。  
 
 模型结构：
