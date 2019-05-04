@@ -1,8 +1,11 @@
 ## 基于LSTM的中文评论情感分析
-本文使用[**Keras**](https://keras.io/)框架搭建对于中文商品评论的情感分析模型。训练2个epoch后在测试集上的准确率为90.42%。  
-数据预处理代码在getData_shopping.py，模型部分的代码在model.py  
-对于文本的预处理包括标识化处理、移除停用词和标点符号、移除英文和数字、序列对齐等。  
-部分处理流程参考了[Keras官方案例](https://github.com/keras-team/keras/blob/master/examples/imdb_lstm.py)。
+本文使用[**Keras**](https://keras.io/)框架搭建对于中文商品评论的情感分析模型。训练2个epoch后在测试集上的准确率为90.42%。
+
+数据预处理部分的代码在preprocess.py  
+模型定义部分的代码在models.py  
+模型训练部分的代码在train.py  
+模型预测部分的代码在predict.py  
+对于文本的预处理包括标识化处理、移除停用词和标点符号、移除英文和数字、序列对齐等。
 
 运行过程：
 ![1554216327768.jpg](https://i.loli.net/2019/04/02/5ca37626ad6e1.jpg)
