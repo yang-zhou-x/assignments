@@ -81,6 +81,22 @@ def get_texts_from_source(data_path):
     return x_texts, y_labels
 
 
+def get_stopwords(word_path):
+    """获取停用词/标点符号。
+
+    # Parameters
+        word_path: str, 停用词/标点符号表所在路径
+    # Returns
+        words: set[str], 停用词/标点符号
+    """
+    with open(word_path, encoding='utf-8') as f:
+        words = f.readlines()  # list
+    words = set(x.strip() for x in words)
+    others = {'\ufeff', ' ', '\t', '\n', '\r', '\u3000'}
+    words = words | others
+    return words
+
+
 @time_elapse
 def tokenize_texts(texts, stopwords=None, character_level=False):
     """获取分词后空格分隔的文本。
@@ -102,21 +118,6 @@ def tokenize_texts(texts, stopwords=None, character_level=False):
         else:
             texts[idx] = ' '.join(res)
     return texts
-
-
-def get_stopwords(word_path):
-    """获取停用词/标点符号。
-
-    # Parameters
-        word_path: str, 停用词/标点符号表所在路径
-    # Returns
-        res: set[str], 停用词/标点符号
-    """
-    with open(word_path, encoding='utf-8') as f:
-        res = f.readlines()  # list
-    res = [x.strip('\n') for x in res] + ['\ufeff',
-                                          ' ', '\t', '\n', '\r', '\u3000']
-    return set(res)
 
 
 @time_elapse
@@ -173,7 +174,7 @@ def encode_y(y_labels, num_classes):
 
 def main():
     print('This module is used for pre-processing data.')
-    print('Generally, it will take a long time to use get_texts_from_source() and tokenize_texts().')
+    print('Usually, it will take a long time to use get_texts_from_source() and tokenize_texts().')
 
 
 if __name__ == '__main__':
