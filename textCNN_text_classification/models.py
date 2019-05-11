@@ -50,7 +50,7 @@ def text_cnn_model(num_features,
     # Parameters
         num_features: int, 词汇表大小，也是embedding层的输入维度
         sequence_len: int, 输入序列的长度
-        embedding_dim: 词向量维度，即embedding层的输出维度
+        embedding_dim: int, 词向量维度，即embedding层的输出维度
         filters: int, 滤波器数量，每层的输出维度（channel数量）
         pool_size: int, 池化层核宽。
         dropout_rate: float, Dropout层对于输入的drop比例
@@ -60,7 +60,7 @@ def text_cnn_model(num_features,
         is_embedding_trainable: bool, true if embedding layer is trainable
         embedding_matrix: dict, dictionary with embedding coefficients
     # Returns
-        model: 一个Text-CNN模型实例。
+        model: 一个Text-CNN模型实例
     """
     inputs = Input(shape=(sequence_len,))
     # 词嵌入层。可以添加预训练的词向量。
