@@ -37,6 +37,8 @@ optimizer = Adam(lr=.0005)
 batch_size = 128  # 用于训练和测试
 epochs = 50  # 实际epoch<=50
 metrics = ['accuracy']
+
+# 路径
 init_path = os.getcwd()
 data_path = os.path.join(init_path, 'datasets/THUCNews')  # 数据集路径
 stopwords_path = os.path.join(
