@@ -92,7 +92,7 @@ def get_data_from_csv(data_path):
         df: pd.DataFrame, 数据集
     """
     df = pd.read_csv(data_path, header=0)
-    print(f'the data shape is {df.shape}.')
+    print(f'the shape of data is {df.shape}.')
     try:
         df['review'] = df['review'].astype('str')
         print('计算每个类别评论长度的中位数、平均值、标准差：')
