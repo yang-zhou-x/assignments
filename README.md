@@ -1,4 +1,4 @@
-# Projects
+## Contents
 
 [基于Text-CNN的中文新闻分类](https://github.com/yang-zhou-x/assignments/tree/master/textCNN_text_classification)  
 (397 sloc) 使用Keras和TensorFlow实现。使用THUCNews数据集，在GPU上训练，准确率94.29%。
