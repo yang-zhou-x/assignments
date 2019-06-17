@@ -1,10 +1,10 @@
 ## Contents
 
 [基于Text-CNN的中文新闻分类](https://github.com/yang-zhou-x/assignments/tree/master/textCNN_text_classification)  
-(397 sloc) 使用Keras和TensorFlow实现。使用THUCNews数据集，在GPU上训练，准确率94.29%。
+(397 sloc) 使用Keras和TensorFlow实现。使用THUCNews数据集，在GPU上训练，准确率94.29%.
 
 [基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/lstm_sentiment_analysis)  
-(179 sloc) 使用Keras和TensorFlow实现。使用京东网购评论数据，在GPU上训练，准确率为90.42%
+(179 sloc) 使用Keras和TensorFlow实现。使用京东网购评论数据，在GPU上训练，准确率90.42%.
 
 [基于ResNet34的多角度人脸识别](https://github.com/yang-zhou-x/assignments/tree/master/resnet34_face_recognition)  
 (322 sloc) 使用PyTorch实现。使用CVL Face Database by Peter Peer, University of Ljubljana。在GPU上训练。
