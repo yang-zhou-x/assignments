@@ -38,4 +38,5 @@ tensorflow-gpu==1.13.1
 keras-gpu==2.2.4  
 
 ## 作者
-周扬，中国人民大学
+周扬，中国人民大学  
+yzhou0000@gmail.com
