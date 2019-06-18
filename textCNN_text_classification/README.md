@@ -2,10 +2,11 @@
 使用[**Keras**](https://keras.io/)和[**TensorFlow**](https://www.tensorflow.org/)搭建中文的新闻分类模型，并在GPU上训练和测试。  
 准确率(micro avg)为94.29%，较baseline提升了5.89%。
 
-数据预处理部分的代码在[preprocess.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/preprocess.py)  
-模型定义部分的代码在[models.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/models.py)  
-模型训练部分的代码在[train.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/train.py)  
-模型预测部分的代码在[predict.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/predict.py)  
+[dataprep.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/dataprep.py) 原始数据文件的读取、整理和持久化  
+[preprocess.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/preprocess.py) 数据预处理  
+[models.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/models.py) 模型定义  
+[train.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/train.py) 训练模型  
+[predict.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/predict.py) 模型推理  
 对于新闻文本的预处理包括分词、移除停用词、移除标点符号、移除英文和数字、序列对齐等。  
 
 模型结构：
