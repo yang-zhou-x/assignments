@@ -1,93 +1,38 @@
 # -*- coding: utf-8 -*-
 '''
-@Time    :   2019
-@Author  :   ZHOU, YANG 
-@Contact :   yzhou0000@gmail.com
+This module is used for pre-processing data.
+
+@Time    : 2019
+@Author  : ZHOU, YANG  
+@Contact : yzhou0000@gmail.com  
 '''
 
 import os
 import time
+import json
+import pickle
 import numpy as np
-from jieba import cut
+import pandas as pd
+import jieba
+import pkuseg
 from tqdm import tqdm
-from collections import defaultdict
-from sklearn.preprocessing import LabelEncoder
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
+from sklearn.preprocessing import LabelEncoder
 from keras.utils import to_categorical
-
-
-def time_elapse(func):
-    """decorator, 计时。
-    """
-    def aux(*args, **kwargs):
-        t0 = time.time()
-        res = func(*args, **kwargs)
-        t1 = time.time()
-        print('-' * 30)
-        print(f'Used time: {round(t1-t0,2)} seconds.')
-        print('-' * 30)
-        return res
-    return aux
-
-
-@time_elapse
-def files_info(data_path, return_num=True):
-    """返回文本类别标签，并进行分类计数，不读取文件。
-
-    # Parameters
-        data_path: str, 数据集的根目录
-        return_num: (optinal) bool, 是否计数
-    # Returns
-        texts_info: dict[str:list], 标签类别（和各类文本数量）
-    """
-    texts_info = defaultdict(list)
-    labels = os.listdir(data_path)
-    for l in labels:
-        texts_info['label'].append(l)
-        if return_num:
-            texts_path = os.path.join(data_path, l)
-            texts_info['num'].append(len(os.listdir(texts_path)))
-    return texts_info
-
-
-@time_elapse
-def get_texts_from_source(data_path):
-    """读取文本。  
-
-    # Parameters
-        data_path: str, 数据集的根目录
-    # Returns
-        x_texts: list[str], 原始文本数据
-        y_labels: list[str], 原始标签
-    """
-    labels_path = data_path
-    labels = os.listdir(labels_path)
-    tot = 0
-    for l in labels:
-        texts_path = os.path.join(labels_path, l)
-        tot += len(os.listdir(texts_path))
-    x_texts = [0] * tot
-    y_labels = [0] * tot
-    idx = 0
-    for l in labels:
-        texts_path = os.path.join(labels_path, l)
-        texts_name = os.listdir(texts_path)
-        for tn in tqdm(texts_name, desc=f'读取{l}类'):
-            with open(os.path.join(texts_path, tn), encoding='utf-8') as f:
-                x_texts[idx] = f.read().strip()
-                y_labels[idx] = l
-            idx += 1
-    return x_texts, y_labels
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.pipeline import make_pipeline
 
 
 def get_stopwords(word_path):
-    """获取停用词/标点符号。
+    """获取停用词。
 
-    # Parameters
-        word_path: str, 停用词/标点符号表所在路径
-    # Returns
-        words: set[str], 停用词/标点符号
+    Parameters
+    ----------
+        word_path: str, 停用词表所在路径
+    Returns
+    -------
+        words: set[str], 停用词
     """
     with open(word_path, encoding='utf-8') as f:
         words = f.readlines()  # list
@@ -97,22 +42,34 @@ def get_stopwords(word_path):
     return words
 
 
-@time_elapse
-def tokenize_texts(texts, stopwords=None, character_level=False):
-    """获取分词后空格分隔的文本。
+def tokenize_texts(texts,
+                   stopwords=None,
+                   character_level=False,
+                   tool='jieba'):
+    """Tokenization. 获取分词后空格分隔的句子。
 
-    # Parameters
+    Parameters
+    ----------
         texts: list[str], 原始中文文本
-        stopwords: (optional) set[str], 停用词/标点符号等
-        character_level: (Optional) bool, 是否为单字级别
-    # Returns
-        texts: list[str], 分词后空格分隔的文本，去除了数字、英文(和停用词)
+        stopwords: set[str], (optional) 可使用停用词
+        character_level: bool, (optional) 是否为单字级别
+        tool: str, (optional) 分词使用'jieba'或'pkuseg'
+    Returns
+    -------
+        texts: list[str], 分词后空格分隔的句子, in-place
     """
+    if tool == 'jieba':
+        tokenizer = jieba.cut
+    elif tool == 'pkuseg':
+        seg = pkuseg.pkuseg(model_name='default')
+        tokenizer = seg.cut
+    else:
+        raise ValueError("The value of parameter `tool` should be \
+            'jieba' or 'pkuseg'.")
     if stopwords is None:
-        stopwords = ()
+        stopwords = set()
     for idx, t in tqdm(enumerate(texts), desc='Cutting texts'):
-        res = (x for x in cut(t)
-               if x not in stopwords and not x.encode('utf-8').isalnum())
+        res = (x for x in tokenizer(t) if x not in stopwords)
         if character_level:
             texts[idx] = ' '.join(xx for x in res for xx in x)
         else:
@@ -120,23 +77,35 @@ def tokenize_texts(texts, stopwords=None, character_level=False):
     return texts
 
 
-@time_elapse
-def texts_to_pad_sequences(x_train, pad_len, dict_size=None,
-                           x_test=None, tokenizer=None):
-    """将分词文本转化为对齐后的整数序列。
+def texts_to_sequence_vectors(x_train, pad_len,
+                              dict_size=None,
+                              x_test=None,
+                              tokenizer=None):
+    """Vectorization. 将已分词文本转换为sequences向量。包括：  
+    (1)将每条文本转换为整数序列。序列中每个数字代表该词在  
+    词典中的索引。索引数字依据频数大小。  
+    (2)序列对齐。
 
-    # Parameters
-        x_train: list[str], 训练集
-        pad_len: int, 对齐的长度
-        dict_size: (optional) int, 字典大小（特征数量）
-        x_test: (optional) list[str], 测试集
+    `tokenizer`可以从零训练，也可以使用已保存的。使用已保存的`tokenizer`
+    时，`x_train`和`x_test`无需区分。
+
+    Parameters
+    ----------
+        x_train: list[str], 训练集，分词后空格分隔
+        pad_len: int, 序列对齐的长度
+        dict_size: int, (optional) 字典大小（即特征数量）
+        x_test: list[str], (optional) 测试集，分词后空格分隔
         tokenizer: (optional) keras text tokenization utility class
-    # Returns
-        x_train: list[str], 训练集
-        x_test: (optional) list[str], 测试集
+    Returns
+    -------
+        x_train: list[str], 训练集文本向量
+        x_test: list[str], (optional) 测试集文本向量
         tokenizer: Text tokenization utility class
     """
     if tokenizer is None:
+        if dict_size is None:
+            raise ValueError('If `tokenizer` is None, \
+                `dict_size` must be specified.')
         tokenizer = Tokenizer(num_words=dict_size)
         tokenizer.fit_on_texts(x_train)
     x_train = tokenizer.texts_to_sequences(x_train)
@@ -150,15 +119,50 @@ def texts_to_pad_sequences(x_train, pad_len, dict_size=None,
     return x_train, tokenizer
 
 
-@time_elapse
+def texts_to_ngram_vectors(train_texts,
+                           test_texts=None,
+                           ngram_range=(1, 1),
+                           use_tfidf=True):
+    """Vectorization. 将已分词文本转换为N-gram向量。
+
+    Parameters
+    ----------
+        train_texts: list[str], 训练集，分词后空格分隔
+        test_texts: list[str], (optional) 测试集，分词后空格分隔
+        ngram_range: (int,int), (optional) N-gram中N的取值范围
+        use_tfidf: bool, (optional) 是否使用TF-IDF
+    Returns
+    -------
+        train_texts: list[str], 训练集文本向量
+        test_texts: list[str], (optional) 测试集文本向量
+        index_word: list[str], 整数索引到字词的mapping
+    """
+    count = CountVectorizer(token_pattern=r'(?u)\b\w+\b',
+                            ngram_range=ngram_range)
+    train_texts = count.fit_transform(train_texts)
+    if use_tfidf:
+        tfidf = TfidfTransformer()
+        train_texts = tfidf.fit_transform(train_texts)
+        pipe = make_pipeline(count, tfidf)
+    if test_texts is not None:
+        try:
+            test_texts = pipe.transform(test_texts)
+        except NameError:
+            test_texts = count.transform(test_texts)
+    index_word = count.get_feature_names()
+    return train_texts, test_texts, index_word
+
+
 def encode_y(y_labels, num_classes):
     """编码标签。
 
-    # Parameters
+    Parameters
+    ----------
         y_labels: list[str], 原始标签
         num_classes: int, 文本类别数量
-    # Returns
-        y_labels: array[int], one-hot编码后的标签
+    Returns
+    -------
+        y_labels: np.ndarray[int], one-hot编码后的标签
         le.classes_: list[str], 原始类别标签
     """
     le = LabelEncoder()
@@ -174,7 +178,6 @@ def encode_y(y_labels, num_classes):
 
 def main():
     print('This module is used for pre-processing data.')
-    print('Usually, it will take a long time to use get_texts_from_source() and tokenize_texts().')
 
 
 if __name__ == '__main__':
