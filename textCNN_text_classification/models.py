@@ -2,9 +2,9 @@
 '''
 This module is used for defining models.
 
-@Time    :   2019  
-@Author  :   ZHOU, YANG  
-@Contact :   yzhou0000@gmail.com  
+@Time    : 2019  
+@Author  : ZHOU, YANG  
+@Contact : yzhou0000@gmail.com  
 '''
 
 from keras.models import Sequential, Model
