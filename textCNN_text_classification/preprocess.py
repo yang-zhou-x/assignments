@@ -7,11 +7,6 @@ This module is used for pre-processing data.
 @Contact : yzhou0000@gmail.com  
 '''
 
-import time
-import json
-import pickle
-import numpy as np
-import pandas as pd
 import jieba
 import pkuseg
 from tqdm import tqdm
