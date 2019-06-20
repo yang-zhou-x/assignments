@@ -7,7 +7,6 @@ This module is used for pre-processing data.
 @Contact : yzhou0000@gmail.com  
 '''
 
-import os
 import time
 import json
 import pickle
