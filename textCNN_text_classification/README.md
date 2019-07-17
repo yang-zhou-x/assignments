@@ -7,7 +7,7 @@
 [models.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/models.py) 模型定义  
 [train.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/train.py) 训练模型  
 [predict.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/predict.py) 模型推理  
-[flask_server.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/flask_server.py) 通过Flask封装API接口进行调用 
+[flask_server.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/flask_server.py) 通过Flask封装API接口进行调用  
 [flask_client.py](https://github.com/yang-zhou-x/assignments/blob/master/textCNN_text_classification/flask_client.py) 调用示例，也可以用postman等软件。 
 对于新闻文本的预处理包括分词、移除停用词、移除标点符号、移除英文和数字、序列对齐等。  
 
