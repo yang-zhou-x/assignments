@@ -1,7 +1,7 @@
 ## Contents
 
 [基于Text-CNN的中文新闻分类](https://github.com/yang-zhou-x/assignments/tree/master/textCNN_text_classification)  
-(702 sloc) 使用Keras和TensorFlow实现。使用THUCNews数据集，准确率94.29%.
+(835 sloc) 使用Keras和TensorFlow实现。使用THUCNews数据集，准确率94.29%.
 
 [基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/lstm_sentiment_analysis)  
 (179 sloc) 使用Keras和TensorFlow实现。使用京东网购评论数据，准确率90.42%.
