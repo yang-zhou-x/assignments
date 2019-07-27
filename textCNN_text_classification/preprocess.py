@@ -9,6 +9,7 @@ This module is used for pre-processing data.
 
 import jieba
 import pkuseg
+import numpy as np
 from tqdm import tqdm
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -168,6 +169,55 @@ def encode_y(y_labels, num_classes):
     else:
         raise ValueError('Wrong number of classes.')
     return y_labels, list(le.classes_)
+
+
+def reduce_memory_usage(df):
+    """减小数据集占用的内存。  
+    通过合理降低数字精确度。不考虑时间型数据。
+
+    Parameters
+    ----------
+        df: pandas.DataFrame
+    Returns
+    -------
+        df: pandas.DataFrame
+    """
+    start_mem = df.memory_usage().sum() / 1024
+    print(f'Memory usage: {round(start_mem, 2)} KB.')
+    for col in df.columns:
+        col_type = df[col].dtype  # 获取该列的数据类型
+        if col_type != object:
+            c_min = df[col].min()  # 数字大小的临界值
+            c_max = df[col].max()
+            if str(col_type)[:3] == 'int':  # 对于整数型
+                if c_min > np.iinfo(np.int8).min \
+                        and c_max < np.iinfo(np.int8).max:
+                    df[col] = df[col].astype(np.int8)
+                elif c_min > np.iinfo(np.int16).min \
+                        and c_max < np.iinfo(np.int16).max:
+                    df[col] = df[col].astype(np.int16)
+                elif c_min > np.iinfo(np.int32).min \
+                        and c_max < np.iinfo(np.int32).max:
+                    df[col] = df[col].astype(np.int32)
+                elif c_min > np.iinfo(np.int64).min \
+                        and c_max < np.iinfo(np.int64).max:
+                    df[col] = df[col].astype(np.int64)
+            else:  # 对于浮点型
+                if c_min > np.finfo(np.float16).min \
+                        and c_max < np.finfo(np.float16).max:
+                    df[col] = df[col].astype(np.float16)
+                elif c_min > np.finfo(np.float32).min \
+                        and c_max < np.finfo(np.float32).max:
+                    df[col] = df[col].astype(np.float32)
+                else:
+                    df[col] = df[col].astype(np.float64)
+        else:  # 对于文本数据 或 类别型
+            df[col] = df[col].astype('str')
+            # df[col] = df[col].astype('category')
+    end_mem = df.memory_usage().sum() / 1024
+    print(f'Memory usage: {round(end_mem, 2)} KB.')
+    print(f'Reduced {round((start_mem - end_mem) / start_mem, 4) * 100}%.')
+    return df
 
 
 def main():
