@@ -18,11 +18,11 @@ dict_size = 18000
 max_sequence_len = 512  # 序列对齐的长度
 batch_size = 128
 
-test_name = 'test.txt'
 stopwords_name = 'cn_stopwords_punctuations.csv'
 model_name = f'TextCNN-{max_sequence_len}-9429.hdf5'
 tokenizer_name = f'tokenizer-{dict_size}.pickle'
 labels_index = 'labels_index.txt'
+test_name = 'test.txt'
 outputs_name = 'result.txt'
 
 # Paths
