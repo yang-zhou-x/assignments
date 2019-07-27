@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
+This module is used for predicting.
+
 @Time    : 2019
 @Author  : ZHOU, YANG 
 @Contact : yzhou0000@gmail.com  
