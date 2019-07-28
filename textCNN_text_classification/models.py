@@ -96,8 +96,10 @@ def text_cnn_model(options_last_layer,
     outputs = Dropout(dropout_rate)(outputs)
     outputs = Flatten()(outputs)
 
-    outputs = Dense(fc_units)(outputs)
-    outputs = Activation('relu')(outputs)
+    if fc_units > 0:
+        outputs = Dense(fc_units)(outputs)
+        outputs = Activation('relu')(outputs)
+        
     outputs = Dense(options_last_layer[0])(outputs)
     outputs = Activation(options_last_layer[1])(outputs)
 
@@ -158,8 +160,10 @@ def lstm_model(last_layer_options,
     model.add(Dropout(dropout_rate))
     model.add(Flatten())
 
-    model.add(Dense(fc_units))
-    model.add(Activation('relu'))
+    if fc_units > 0:
+        model.add(Dense(fc_units))
+        model.add(Activation('relu'))
+
     model.add(Dense(last_layer_options[0]))
     model.add(Activation(last_layer_options[1]))
     return model
@@ -218,8 +222,10 @@ def gru_model(options_last_layer,
     outputs = Dropout(dropout_rate)(outputs)
     outputs = Flatten()(outputs)
 
-    outputs = Dense(fc_units)(outputs)
-    outputs = Activation('relu')(outputs)
+    if fc_units > 0:
+        outputs = Dense(fc_units)(outputs)
+        outputs = Activation('relu')(outputs)
+        
     last_units, last_activation = options_last_layer[:2]
     outputs = Dense(last_units)(outputs)
     outputs = Activation(last_activation)(outputs)
