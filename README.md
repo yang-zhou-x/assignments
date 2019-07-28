@@ -4,7 +4,7 @@
 (887 sloc) 使用Keras和TensorFlow实现。使用THUCNews数据集，准确率94.29%.
 
 [基于LSTM的中文评论情感分析](https://github.com/yang-zhou-x/assignments/tree/master/lstm_sentiment_analysis)  
-(179 sloc) 使用Keras和TensorFlow实现。使用京东网购评论数据，准确率90.42%.
+(586 sloc) 使用Keras和TensorFlow实现。使用京东网购评论数据，准确率90.42%.
 
 [基于ResNet34的多角度人脸识别](https://github.com/yang-zhou-x/assignments/tree/master/resnet34_face_recognition)  
 (322 sloc) 使用PyTorch实现。使用CVL Face Database by Peter Peer, University of Ljubljana。
