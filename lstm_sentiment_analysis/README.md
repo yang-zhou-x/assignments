@@ -23,6 +23,15 @@
 
 中文停用词数据集来自网络，已上传至/datasets目录下。
 
+## 测试
+这里随便找了两个漱口水的商品评论。等有时间了再多找一些。  
+测试文本：  
+![lstm_shoppingComments_test.jpg](https://github.com/yang-zhou-x/assignments/blob/master/others/lstm_shoppingComments_test.jpg)  
+输出的结果：  
+![lstm_shoppingComments_result.png](https://github.com/yang-zhou-x/assignments/blob/master/others/lstm_shoppingComments_result.png)  
+在英特尔8代低压i5四核处理器(i5-8259u)上的推理速度：  
+![lstm_shoppingComments_test_time.jpg](https://github.com/yang-zhou-x/assignments/blob/master/others/lstm_shoppingComments_test_time.jpg)  
+
 ## 环境配置
 CUDA==9.2  
 cuDNN==7.3.1  
